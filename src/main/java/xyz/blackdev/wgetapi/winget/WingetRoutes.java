@@ -3,6 +3,7 @@ package xyz.blackdev.wgetapi.winget;
 import de.craftsblock.craftsnet.api.http.Exchange;
 import de.craftsblock.craftsnet.api.http.RequestHandler;
 import de.craftsblock.craftsnet.api.http.annotations.Route;
+import de.craftsblock.craftsnet.api.transformers.annotations.Transformer;
 import de.craftsblock.craftsnet.autoregister.meta.AutoRegister;
 
 import java.nio.file.Paths;
@@ -58,12 +59,11 @@ public class WingetRoutes implements RequestHandler {
     }
 
     @Route("/winget/all/{limit}")
-    public String allLimit(Exchange ex, String limit) {
-        int lim = 200;
-        try { lim = Math.max(1, Math.min(5000, Integer.parseInt(limit))); } catch (Exception ignored) {}
+    @Transformer(parameter = "limit", transformer = WingetLimitSanitizer.class)
+    public String allLimit(Exchange ex, int limit) {
         List<WingetIndex.Pkg> list = applyFilters(index.all());
-        if (list.size() <= lim) return json(list);
-        return json(list.subList(0, lim));
+        if (list.size() <= limit) return json(list);
+        return json(list.subList(0, limit));
     }
 
     @Route("/winget/search/{q}")
