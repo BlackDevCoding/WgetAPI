@@ -4,7 +4,6 @@ import de.craftsblock.craftsnet.api.http.Exchange;
 import de.craftsblock.craftsnet.api.http.RequestHandler;
 import de.craftsblock.craftsnet.api.http.annotations.Route;
 import de.craftsblock.craftsnet.api.transformers.annotations.Transformer;
-import de.craftsblock.craftsnet.api.transformers.builtin.IntTransformer;
 import de.craftsblock.craftsnet.autoregister.meta.AutoRegister;
 
 import java.nio.file.Paths;
